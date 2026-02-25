@@ -356,37 +356,88 @@
     <script>
 
         // ===============================
-        // SERIAL COMMUNICATION
-        // ===============================
+// ESP32 BLE COMMUNICATION (VERCEL + ESP32 FRIENDLY)
+// ===============================
 
-        let port;
-        let writer;
+let bleDevice = null;
+let bleServer = null;
+let bleCharacteristic = null;
 
-        async function connectESP() {
-            try {
-                port = await navigator.serial.requestPort();
-                await port.open({ baudRate: 115200 });
+const SERVICE_UUID = "12345678-1234-1234-1234-1234567890ab";
+const CHARACTERISTIC_UUID = "abcd1234-1234-1234-1234-abcdef123456";
 
-                const encoder = new TextEncoderStream();
-                encoder.readable.pipeTo(port.writable);
-                writer = encoder.writable.getWriter();
+async function connectESP() {
 
-                alert("ESP32 Connected ✅");
-                console.log("ESP Connected");
+    try {
 
-            } catch (err) {
-                alert("Connection Failed ❌");
-                console.log(err);
-            }
-         }
-         async function sendToESP(message) {
-             if (!writer) {
-                 console.log("ESP not connected");
-                 return;
-             }
-             await writer.write(message + "\n");
-             console.log("Sent:", message);
-         }
+        bleDevice = await navigator.bluetooth.requestDevice({
+
+            filters: [
+                { name: "VisionCare-ESP32" }
+            ],
+
+            optionalServices: [SERVICE_UUID]
+
+        });
+
+        bleServer = await bleDevice.gatt.connect();
+
+        const service = await bleServer.getPrimaryService(SERVICE_UUID);
+
+        bleCharacteristic = await service.getCharacteristic(CHARACTERISTIC_UUID);
+
+        alert("ESP32 BLE Connected ✅");
+
+        console.log("BLE Connected");
+
+        bleDevice.addEventListener('gattserverdisconnected', () => {
+
+            console.log("ESP32 Disconnected");
+            bleCharacteristic = null;
+
+        });
+
+    }
+    catch(error) {
+
+        alert("BLE Connection Failed ❌");
+
+        console.log(error);
+
+    }
+
+}
+
+async function sendToESP(message) {
+
+    if (!bleCharacteristic) {
+
+        console.log("ESP32 not connected");
+
+        return;
+
+    }
+
+    try {
+
+        const encoder = new TextEncoder();
+
+        await bleCharacteristic.writeValue(
+            encoder.encode(message)
+        );
+
+        console.log("Sent to ESP32:", message);
+
+    }
+    catch(error) {
+
+        console.log("Send failed:", error);
+
+    }
+
+}
+
+       
          
 
 
