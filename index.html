@@ -78,8 +78,9 @@
         
         /* Camera */
         .cam-widget { grid-column: 1 / 2; grid-row: 1 / 2; background: #000; border-radius: var(--radius-lg); border: 2px solid var(--border); position: relative; overflow: hidden; display: flex; align-items: center; justify-content: center; }
-       .cam-widget video,
-        .cam-widget canvas {transform: scaleX(-1);}
+        video { position: absolute; width: 100%; height: 100%; object-fit: contain; transform: scaleX(-1); }
+        canvas { position: absolute; width: 100%; height: 100%; object-fit: contain; transform: scaleX(-1); z-index: 10; }
+        
         .hud-overlay { position: absolute; top: 15px; left: 15px; background: rgba(0,0,0,0.8); padding: 12px; border-radius: 8px; border: var(--border); font-family: 'JetBrains Mono'; font-size: 0.8rem; color: var(--c-success); z-index: 20; min-width: 200px; pointer-events: none; }
         .hud-row { display: flex; justify-content: space-between; margin-bottom: 4px; }
         
@@ -150,7 +151,7 @@
     <div id="auth-layer">
         <div class="auth-box">
             <i class="fas fa-heart-pulse" style="font-size: 4rem; color: var(--c-primary); margin-bottom: 20px;"></i>
-            <h2 style="color:white; margin-bottom:10px;">VisionCare </h2>
+            <h2 style="color:white; margin-bottom:10px;">VisionCare Titan OS</h2>
             <p style="color:var(--c-text-muted); margin-bottom: 30px;">Medical Command Center</p>
             <input type="text" id="auth-user" class="form-control" placeholder="admin" value="admin">
             <input type="password" id="auth-pass" class="form-control" placeholder="admin123" value="admin123">
@@ -181,7 +182,7 @@
                     <span class="badge badge-success">● ONLINE</span>
                     <div style="text-align:right;">
                         <div class="font-bold">Dr. Admin</div>
-                       
+                        <div class="text-xs text-muted">Chief Medical Officer</div>
                     </div>
                 </div>
             </header>
