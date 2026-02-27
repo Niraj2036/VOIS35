@@ -78,8 +78,10 @@
         
         /* Camera */
         .cam-widget { grid-column: 1 / 2; grid-row: 1 / 2; background: #000; border-radius: var(--radius-lg); border: 2px solid var(--border); position: relative; overflow: hidden; display: flex; align-items: center; justify-content: center; }
-        video { position: absolute; width: 100%; height: 100%; object-fit: contain; transform: scaleX(-1); }
-        canvas { position: absolute; width: 100%; height: 100%; object-fit: contain; transform: scaleX(-1); z-index: 10; }
+        .cam-widget video,
+.cam-widget canvas {
+    transform: scaleX(-1);
+}
         
         .hud-overlay { position: absolute; top: 15px; left: 15px; background: rgba(0,0,0,0.8); padding: 12px; border-radius: 8px; border: var(--border); font-family: 'JetBrains Mono'; font-size: 0.8rem; color: var(--c-success); z-index: 20; min-width: 200px; pointer-events: none; }
         .hud-row { display: flex; justify-content: space-between; margin-bottom: 4px; }
