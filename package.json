@@ -1,0 +1,13 @@
+{
+  "name": "otp-auth-app",
+  "version": "1.0.0",
+  "description": "OTP Authentication using Twilio + Vercel",
+  "main": "index.js",
+  "type": "module",
+  "scripts": {
+    "start": "node api/send-otp.js"
+  },
+  "dependencies": {
+    "twilio": "^4.23.0"
+  }
+}
