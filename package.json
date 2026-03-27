@@ -8,6 +8,8 @@
     "start": "node api/send-otp.js"
   },
   "dependencies": {
+    "dotenv": "^16.4.7",
+    "nodemailer": "^6.9.16",
     "twilio": "^4.23.0"
   }
 }
